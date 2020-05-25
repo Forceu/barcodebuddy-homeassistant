@@ -9,7 +9,8 @@ ARG BBUDDY_RELEASE
 LABEL build_version="BarcodeBuddy ${VERSION} Build ${BUILD_DATE}"
 LABEL maintainer="Marc Ole Bulling"
 
-
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
  echo "**** Installing runtime packages ****" && \
