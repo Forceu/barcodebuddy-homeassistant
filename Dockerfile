@@ -1,4 +1,4 @@
-FROM lsiobase/nginx:3.11
+FROM hassioaddons/base:7.2.0
 
 #Build example: docker build --no-cache --pull --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VERSION="v1.4.0.0" -t forceu/barcodebuddy-docker .
 
@@ -60,6 +60,29 @@ echo "**** Cleanup ****" && \
 # copy local files
 COPY root/ /
 
-# ports and volumes
-EXPOSE 80 443
-VOLUME /config
+
+# Build arguments
+ARG BUILD_ARCH
+#ARG BUILD_DATE
+ARG BUILD_REF
+ARG BUILD_VERSION
+
+# Labels
+LABEL \
+    io.hass.name="Barcode Buddy for Grocy" \
+    io.hass.description="Pass barcodes to Grocy" \
+    io.hass.arch="${BUILD_ARCH}" \
+    io.hass.type="addon" \
+    io.hass.version=${BUILD_VERSION} \
+    maintainer="Marc Ole Bulling <email>" \
+    org.opencontainers.image.title="Barcode Buddy for Grocy" \
+    org.opencontainers.image.description="Pass barcodes to Grocy"\
+    org.opencontainers.image.vendor="Marc Ole Bulling" \
+    org.opencontainers.image.authors="Marc Ole Bulling <email>" \
+    org.opencontainers.image.licenses="GPLv3" \
+    org.opencontainers.image.url="https://github.com/Forecu/barcodebuddy" \
+    org.opencontainers.image.source="https://github.com/Forceu/barcodebuddy-docker" \
+    org.opencontainers.image.documentation="https://github.com/Forceu/barcodebuddy/blob/master/README.md" \
+    org.opencontainers.image.created=${BUILD_DATE} \
+    org.opencontainers.image.revision=${BUILD_REF} \
+    org.opencontainers.image.version=${BUILD_VERSION}
