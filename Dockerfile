@@ -13,7 +13,6 @@ LABEL maintainer="Marc Ole Bulling"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
- echo "**** Installing runtime packages ****" && \
  apk add --no-cache \
         curl \
         evtest \
@@ -29,7 +28,6 @@ RUN \
         screen \
         sudo
 RUN \
- echo "**** Installing BarcodeBuddy ****" && \
  mkdir -p /app/bbuddy && \
  if [ -z ${BBUDDY_RELEASE+x} ]; then \
 	BBUDDY_RELEASE=$(curl -sX GET "https://api.github.com/repos/Forceu/barcodebuddy/releases/latest" \
@@ -47,10 +45,11 @@ sed -i 's/SCRIPT_LOCATION=.*/SCRIPT_LOCATION="\/app\/bbuddy\/index.php"/g' /app/
  sed -i 's/pm.max_children = 5/pm.max_children = 20/g' /etc/php7/php-fpm.d/www.conf && \
 sed -i 's/WWW_USER=.*/WWW_USER="abc"/g' /app/bbuddy/example/grabInput.sh && \
 sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/docker/parseEnv.sh && \
-sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/example/grabInput.sh && \
-sed -i 's/const DEFAULT_USE_REDIS =.*/const DEFAULT_USE_REDIS = "1";/g' /app/bbuddy/incl/db.inc.php && \
-(crontab -l 2>/dev/null; echo "* * * * * sudo -u abc /usr/bin/php /app/bbuddy/cron.php >/dev/null 2>&1") | crontab - && \
-echo "**** Cleanup ****" && \
+sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/example/grabInput.sh
+#Bug in sudo requires disable_coredump
+#Max children need to be a higher value, otherwise websockets / SSE might not work properly
+
+RUN \
  rm -rf \
 	/root/.cache \
 	/tmp/*
