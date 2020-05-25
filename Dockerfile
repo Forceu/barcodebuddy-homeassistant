@@ -1,4 +1,4 @@
-FROM lsiobase/nginx:3.11
+FROM hassioaddons/base:7.2.0
 
 #Build example: docker build --no-cache --pull --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VERSION="v1.4.0.0" -t forceu/barcodebuddy-docker .
 
@@ -14,6 +14,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
  apk add --no-cache \
+        nginx \
         curl \
         evtest \
         php7 \
