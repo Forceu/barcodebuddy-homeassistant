@@ -13,7 +13,6 @@ LABEL maintainer="Marc Ole Bulling"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
-    echo "**** Installing runtime packages ****" && \
     apk add --no-cache \
         nginx=1.16.1-r6
 
