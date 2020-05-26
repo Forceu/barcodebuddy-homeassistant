@@ -1,10 +1,4 @@
-ARG BUILD_FROM=hassioaddons/base:7.2.0
-# hadolint ignore=DL3006
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-# Setup base
-# hadolint ignore=DL3003
-RUN apk update && apk add nginx=1.16.1-r6
+RUN apk add --no-cache nginx=1.16.1-r6
