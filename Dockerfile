@@ -19,6 +19,7 @@ RUN \
         evtest \
         php7 \
         php7-curl \
+        php7-fpm \
         php7-openssl \
         php7-pdo \
         php7-pdo_sqlite \
