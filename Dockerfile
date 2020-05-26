@@ -13,8 +13,10 @@ LABEL maintainer="Marc Ole Bulling"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
+ echo "**** Installing runtime packages ****" && \
  apk add --no-cache \
-        nginx=1.16.1-r6 \
+        curl \
+        evtest \
         php7 \
         php7-curl \
         php7-openssl \
@@ -22,8 +24,11 @@ RUN \
         php7-pdo_sqlite \
         php7-sqlite3 \
         php7-sockets \
-        
+        screen \
+        sudo
+
 RUN \
+ echo "**** Installing BarcodeBuddy ****" && \
  mkdir -p /app/bbuddy && \
  if [ -z ${BBUDDY_RELEASE+x} ]; then \
 	BBUDDY_RELEASE=$(curl -sX GET "https://api.github.com/repos/Forceu/barcodebuddy/releases/latest" \
@@ -42,10 +47,12 @@ sed -i 's/SCRIPT_LOCATION=.*/SCRIPT_LOCATION="\/app\/bbuddy\/index.php"/g' /app/
 sed -i 's/WWW_USER=.*/WWW_USER="abc"/g' /app/bbuddy/example/grabInput.sh && \
 sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/docker/parseEnv.sh && \
 sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/example/grabInput.sh
+
 #Bug in sudo requires disable_coredump
 #Max children need to be a higher value, otherwise websockets / SSE might not work properly
 
 RUN \
+ echo "**** Cleanup ****" && \
  rm -rf \
 	/root/.cache \
 	/tmp/*
