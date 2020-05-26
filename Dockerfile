@@ -7,4 +7,4 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 # hadolint ignore=DL3003
-RUN apk add --no-cache nginx=1.16.1-r6
+RUN apk update && apk add --no-cache nginx=1.16.1-r6
