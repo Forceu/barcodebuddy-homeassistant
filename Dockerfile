@@ -15,17 +15,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
     echo "**** Installing runtime packages ****" && \
     apk add --no-cache \
-        nginx=1.16.1-r6 \
-        curl \
-        php7=7.3.18-r0 \
-        php7-curl=7.3.18-r0 \
-        php7-fpm=7.3.18-r0 \
-        php7-openssl=7.3.18-r0 \
-        php7-pdo=7.3.18-r0 \
-        php7-pdo_sqlite=7.3.18-r0 \
-        php7-sqlite3=7.3.18-r0 \
-        php7-sockets=7.3.18-r0 
-
+        nginx=1.16.1-r6
 
 RUN \
     echo "**** Installing BarcodeBuddy ****" && \
