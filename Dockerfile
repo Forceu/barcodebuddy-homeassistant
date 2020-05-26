@@ -28,6 +28,7 @@ RUN \
         screen \
         sudo
 
+
 RUN \
  echo "**** Installing BarcodeBuddy ****" && \
  mkdir -p /app/bbuddy && \
@@ -52,11 +53,13 @@ sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/example/grabInput.sh
 #Bug in sudo requires disable_coredump
 #Max children need to be a higher value, otherwise websockets / SSE might not work properly
 
+
 RUN \
  echo "**** Cleanup ****" && \
  rm -rf \
 	/root/.cache \
 	/tmp/*
+
 
 # copy local files
 COPY root/ /
@@ -67,6 +70,7 @@ ARG BUILD_ARCH
 #ARG BUILD_DATE
 ARG BUILD_REF
 ARG BUILD_VERSION
+
 
 # Labels
 LABEL \
