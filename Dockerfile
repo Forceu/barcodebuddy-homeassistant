@@ -13,8 +13,8 @@ LABEL maintainer="Marc Ole Bulling"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
- echo "**** Installing runtime packages ****" && \
- apk add --no-cache \
+    echo "**** Installing runtime packages ****" && \
+    apk add --no-cache \
         curl \
         evtest \
         php7 \
@@ -30,25 +30,25 @@ RUN \
 
 
 RUN \
- echo "**** Installing BarcodeBuddy ****" && \
- mkdir -p /app/bbuddy && \
- if [ -z ${BBUDDY_RELEASE+x} ]; then \
-	BBUDDY_RELEASE=$(curl -sX GET "https://api.github.com/repos/Forceu/barcodebuddy/releases/latest" \
-	| awk '/tag_name/{print $4; exit}' FS='[""]'); \
- fi && \
- curl -o \
-	/tmp/bbuddy.tar.gz -L \
-	"https://github.com/Forceu/barcodebuddy/archive/${BBUDDY_RELEASE}.tar.gz" && \
- tar xf \
-	/tmp/bbuddy.tar.gz -C \
-	/app/bbuddy/ --strip-components=1 && \
-   sed -i 's/[[:blank:]]*const[[:blank:]]*IS_DOCKER[[:blank:]]*=[[:blank:]]*false;/const IS_DOCKER = true;/g' /app/bbuddy/config-dist.php && \
- echo "Set disable_coredump false" > /etc/sudo.conf && \
-sed -i 's/SCRIPT_LOCATION=.*/SCRIPT_LOCATION="\/app\/bbuddy\/index.php"/g' /app/bbuddy/example/grabInput.sh && \
- sed -i 's/pm.max_children = 5/pm.max_children = 20/g' /etc/php7/php-fpm.d/www.conf && \
-sed -i 's/WWW_USER=.*/WWW_USER="abc"/g' /app/bbuddy/example/grabInput.sh && \
-sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/docker/parseEnv.sh && \
-sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/example/grabInput.sh
+    echo "**** Installing BarcodeBuddy ****" && \
+    mkdir -p /app/bbuddy && \
+    if [ -z ${BBUDDY_RELEASE+x} ]; then \
+        BBUDDY_RELEASE=$(curl -sX GET "https://api.github.com/repos/Forceu/barcodebuddy/releases/latest" \
+        | awk '/tag_name/{print $4; exit}' FS='[""]'); \
+    fi && \
+    curl -o \
+        /tmp/bbuddy.tar.gz -L \
+        "https://github.com/Forceu/barcodebuddy/archive/${BBUDDY_RELEASE}.tar.gz" && \
+    tar xf \
+        /tmp/bbuddy.tar.gz -C \
+        /app/bbuddy/ --strip-components=1 && \
+    sed -i 's/[[:blank:]]*const[[:blank:]]*IS_DOCKER[[:blank:]]*=[[:blank:]]*false;/const IS_DOCKER = true;/g' /app/bbuddy/config-dist.php && \
+    echo "Set disable_coredump false" > /etc/sudo.conf && \
+    sed -i 's/SCRIPT_LOCATION=.*/SCRIPT_LOCATION="\/app\/bbuddy\/index.php"/g' /app/bbuddy/example/grabInput.sh && \
+    sed -i 's/pm.max_children = 5/pm.max_children = 20/g' /etc/php7/php-fpm.d/www.conf && \
+    sed -i 's/WWW_USER=.*/WWW_USER="abc"/g' /app/bbuddy/example/grabInput.sh && \
+    sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/docker/parseEnv.sh && \
+    sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/example/grabInput.sh
 
 #Bug in sudo requires disable_coredump
 #Max children need to be a higher value, otherwise websockets / SSE might not work properly
