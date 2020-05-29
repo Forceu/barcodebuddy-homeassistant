@@ -1,6 +1,8 @@
-FROM lsiobase/nginx:3.11
+ARG BUILD_DATE
+FROM $BUILD_FROM
 
-#Build example: docker build --no-cache --pull --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VERSION="v1.4.0.0" -t forceu/barcodebuddy-docker .
+# Add env
+ENV LANG C.UTF-8
 
 # set version label
 ARG BUILD_DATE
@@ -25,6 +27,7 @@ RUN \
         php7-sockets \
         screen \
         sudo
+
 RUN \
  echo "**** Installing BarcodeBuddy ****" && \
  mkdir -p /app/bbuddy && \
