@@ -19,9 +19,7 @@
     "80/tcp": "Web interface (Not required for Ingress)"
   },
   "options": {
-    "device": null
   },
   "schema": {
-    "device": "str"
   }
 }
