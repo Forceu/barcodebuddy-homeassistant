@@ -15,5 +15,11 @@
   },
   "ports_description": {
     "80/tcp": "Web interface"
+  },
+  "options": {
+    "nada": "nothing"
+  },
+  "schema": {
+    "nada": "list(nothing)"
   }
 }
