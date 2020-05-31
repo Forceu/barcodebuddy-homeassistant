@@ -3,7 +3,7 @@
   "build_from": {
     "aarch64": "lsiobase/nginx:arm64v8-3.11",
     "amd64": "lsiobase/nginx:amd64-3.11",
-    "armv7": "lsiobase/nginx:arm32v7-3.11",
+    "armv7": "lsiobase/nginx:arm32v7-3.11"
   },
   "args": {}
 }
