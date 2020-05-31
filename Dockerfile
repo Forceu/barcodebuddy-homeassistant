@@ -1,5 +1,5 @@
-ARG BUILD_DATE
-FROM $BUILD_FROM
+ARG BUILD_FROM=hassioaddons/base:7.2.0
+FROM ${BUILD_FROM}
 
 # Add env
 ENV LANG C.UTF-8
@@ -20,6 +20,7 @@ RUN \
         evtest \
         php7 \
         php7-curl \
+        php7-fpm \
         php7-openssl \
         php7-pdo \
         php7-pdo_sqlite \
