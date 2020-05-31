@@ -1,11 +1,8 @@
-ARG BUILD_FROM=hassioaddons/base:7.2.0
+ARG BUILD_FROM=lsiobase/nginx:3.11
 FROM ${BUILD_FROM}
 
 # Add env
 ENV LANG C.UTF-8
-
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 RUN \
@@ -47,7 +44,7 @@ RUN \
 #Max children need to be a higher value, otherwise websockets / SSE might not work properly
 
 # copy local files
-COPY rootfs/ /
+COPY root/ /
 
 # Build arguments
 ARG BUILD_ARCH
