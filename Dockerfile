@@ -21,6 +21,7 @@ RUN \
         php7-sqlite3 \
         php7-sockets \
         screen \
+        shadow \
         sudo \
     \
     && apk add --no-cache --virtual .build-dependencies \
@@ -46,7 +47,7 @@ RUN \
 #Max children need to be a higher value, otherwise websockets / SSE might not work properly
 
 # copy local files
-COPY root/ /
+COPY rootfs/ /
 
 # Build arguments
 ARG BUILD_ARCH
