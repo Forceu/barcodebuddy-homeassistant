@@ -2,20 +2,32 @@
 
 bashio::log.info "Setting environment..."
 
+bashio::log.info "Copy config..."
+cp /app/bbuddy/config-dist.php /app/bbuddy/config.php
+
+bashio::log.info "Check require_api_key preference..."
 if bashio::config.false 'require_api_key'; then
-    export BBUDDY_REQUIRE_API_KEY=0
+    bashio::log.info "Setting to false."
+    sed -i '44s/\(true\|false\)/false/gi' config.php
 else 
-    export BBUDDY_REQUIRE_API_KEY=1
+    bashio::log.info "Setting to true."
+    sed -i '44s/\(true\|false\)/true/gi' config.php
 fi
 
+bashio::log.info "Check disable_auth preference..."
 if bashio::config.false 'disable_auth'; then
-    export BBUDDY_DISABLE_AUTHENTICATION=0
+    bashio::log.info "Setting to false."    
+    sed -i '47s/\(true\|false\)/false/gi' config.php
 else 
-    export BBUDDY_DISABLE_AUTHENTICATION=1
+    bashio::log.info "Setting to true."
+    sed -i '47s/\(true\|false\)/true/gi' config.php
 fi
 
+bashio::log.info "Check debug preference..."
 if bashio::config.false 'debug'; then
-    export BBUDDY_IS_DEBUG=0
+    bashio::log.info "Setting to false."
+    sed -i '50s/\(true\|false\)/false/gi' config.php
 else 
-    export BBUDDY_IS_DEBUG=1
+    bashio::log.info "Setting to true."
+    sed -i '50s/\(true\|false\)/true/gi' config.php
 fi

@@ -1,24 +1,4 @@
-#!/usr/bin/with-contenv bashio
-
-bashio::log.info "Setting environment..."
-
-if bashio::config.false 'require_api_key'; then
-    export BBUDDY_REQUIRE_API_KEY=0
-else 
-    export BBUDDY_REQUIRE_API_KEY=1
-fi
-
-if bashio::config.false 'disable_auth'; then
-    export BBUDDY_DISABLE_AUTHENTICATION=0
-else 
-    export BBUDDY_DISABLE_AUTHENTICATION=1
-fi
-
-if bashio::config.false 'debug'; then
-    export BBUDDY_IS_DEBUG=0
-else 
-    export BBUDDY_IS_DEBUG=1
-fi
+#!/usr/bin/with-contenv bash
 
 sudo -u abc /usr/bin/nohup /usr/bin/php /app/bbuddy/wsserver.php &
 /usr/bin/nohup /bin/bash /app/bbuddy/example/grabInput.sh &
