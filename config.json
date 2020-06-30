@@ -17,9 +17,13 @@
     "80/tcp": "Web interface"
   },
   "options": {
-    "nada": "nothing"
+    "require_api_key": false,
+    "disable_auth": false,
+    "debug": false
   },
   "schema": {
-    "nada": "list(nothing)"
+    "require_api_key": "bool",
+    "disable_auth" : "bool",
+    "debug": "bool"
   }
 }
