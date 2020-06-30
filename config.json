@@ -19,11 +19,15 @@
   "options": {
     "require_api_key": false,
     "disable_auth": false,
-    "debug": false
+    "debug": false,
+    "curl_allow_insecure_ssl_ca": false,
+    "curl_allow_insecure_ssl_host": false
   },
   "schema": {
     "require_api_key": "bool",
     "disable_auth" : "bool",
-    "debug": "bool"
+    "debug": "bool",
+    "curl_allow_insecure_ssl_ca": "bool",
+    "curl_allow_insecure_ssl_host": "bool"
   }
 }

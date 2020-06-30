@@ -31,3 +31,21 @@ else
     bashio::log.info "Setting to true."
     sed -i '50s/\(true\|false\)/true/gi' /config/data/config.php
 fi
+
+bashio::log.info "Check cURL insecure SSL CA preference..."
+if bashio::config.false 'curl_allow_insecure_ssl_ca'; then
+    bashio::log.info "Setting to false."
+    sed -i '35s/\(true\|false\)/false/gi' /config/data/config.php
+else 
+    bashio::log.info "Setting to true."
+    sed -i '35s/\(true\|false\)/true/gi' /config/data/config.php
+fi
+
+bashio::log.info "Check cURL insecure SSL host preference..."
+if bashio::config.false 'curl_allow_insecure_ssl_host'; then
+    bashio::log.info "Setting to false."
+    sed -i '41s/\(true\|false\)/false/gi' /config/data/config.php
+else 
+    bashio::log.info "Setting to true."
+    sed -i '41s/\(true\|false\)/true/gi' /config/data/config.php
+fi
