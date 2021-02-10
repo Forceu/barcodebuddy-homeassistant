@@ -4,9 +4,15 @@ FROM ${BUILD_FROM}
 # Add env
 ENV LANG C.UTF-8
 
-# Setup base
+# set version label
+ARG BUILD_DATE
+ARG VERSION
+ARG BBUDDY_RELEASE
+LABEL build_version="BarcodeBuddy ${VERSION} Build ${BUILD_DATE}"
+
 RUN \
-    apk add --no-cache \
+ echo "**** Installing runtime packages ****" && \
+ apk add --no-cache \
         curl \
         evtest \
         jq \
@@ -18,38 +24,36 @@ RUN \
         php7-pdo_sqlite \
         php7-sqlite3 \
         php7-sockets \
+        php7-redis \
+        redis \
         screen \
-        shadow \
-        sudo \
-        tzdata \
-    \
-    && apk add --no-cache --virtual .build-dependencies \
-        git \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-        "https://github.com/hassio-addons/bashio/archive/v0.9.0.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-        /tmp/bashio.tar.gz \
-        --strip 1 -C /tmp/bashio \
-    \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    \
-    && git clone --branch "v1.5.0.4" --depth=1 \
-        https://github.com/forceu/barcodebuddy.git /app/bbuddy \
-    \
-    && sed -i 's/[[:blank:]]*const[[:blank:]]*IS_DOCKER[[:blank:]]*=[[:blank:]]*false;/const IS_DOCKER = true;/g' /app/bbuddy/config-dist.php \
-    && echo "Set disable_coredump false" > /etc/sudo.conf \
-    && sed -i 's/SCRIPT_LOCATION=.*/SCRIPT_LOCATION="\/app\/bbuddy\/index.php"/g' /app/bbuddy/example/grabInput.sh \
-    && sed -i 's/pm.max_children = 5/pm.max_children = 20/g' /etc/php7/php-fpm.d/www.conf \
-    && sed -i 's/WWW_USER=.*/WWW_USER="abc"/g' /app/bbuddy/example/grabInput.sh \
-    && sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/docker/parseEnv.sh \
-    && sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/example/grabInput.sh \
-    \
-    && rm -rf \
-        /root/.cache \
-        /tmp* \
-    && apk del --no-cache --purge .build-dependencies
+        sudo
+RUN \
+ echo "**** Installing BarcodeBuddy ****" && \
+ mkdir -p /app/bbuddy && \
+ if [ -z ${BBUDDY_RELEASE+x} ]; then \
+	BBUDDY_RELEASE=$(curl -sX GET "https://api.github.com/repos/Forceu/barcodebuddy/releases/latest" \
+	| awk '/tag_name/{print $4; exit}' FS='[""]'); \
+ fi && \
+ curl -o \
+	/tmp/bbuddy.tar.gz -L \
+	"https://github.com/Forceu/barcodebuddy/archive/${BBUDDY_RELEASE}.tar.gz" && \
+ tar xf \
+	/tmp/bbuddy.tar.gz -C \
+	/app/bbuddy/ --strip-components=1 && \
+   sed -i 's/[[:blank:]]*const[[:blank:]]*IS_DOCKER[[:blank:]]*=[[:blank:]]*false;/const IS_DOCKER = true;/g' /app/bbuddy/config-dist.php && \
+ echo "Set disable_coredump false" > /etc/sudo.conf && \
+sed -i 's/SCRIPT_LOCATION=.*/SCRIPT_LOCATION="\/app\/bbuddy\/index.php"/g' /app/bbuddy/example/grabInput.sh && \
+ sed -i 's/pm.max_children = 5/pm.max_children = 20/g' /etc/php7/php-fpm.d/www.conf && \
+sed -i 's/WWW_USER=.*/WWW_USER="abc"/g' /app/bbuddy/example/grabInput.sh && \
+sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/docker/parseEnv.sh && \
+sed -i 's/IS_DOCKER=.*/IS_DOCKER=true/g' /app/bbuddy/example/grabInput.sh && \
+sed -i 's/const DEFAULT_USE_REDIS =.*/const DEFAULT_USE_REDIS = "1";/g' /app/bbuddy/incl/db.inc.php && \
+(crontab -l 2>/dev/null; echo "* * * * * sudo -u abc /usr/bin/php /app/bbuddy/cron.php >/dev/null 2>&1") | crontab - && \
+echo "**** Cleanup ****" && \
+ rm -rf \
+	/root/.cache \
+	/tmp/*
 
 #Bug in sudo requires disable_coredump
 #Max children need to be a higher value, otherwise websockets / SSE might not work properly
@@ -57,6 +61,9 @@ RUN \
 # copy local files
 COPY root/ /
 
+# ports and volumes
+EXPOSE 80 443
+VOLUME /config
 # Build arguments
 ARG BUILD_ARCH
 ARG BUILD_DATE
@@ -69,16 +76,5 @@ LABEL \
     io.hass.description="Barcode system for Grocy" \
     io.hass.arch="${BUILD_ARCH}" \
     io.hass.type="addon" \
-    io.hass.version=${BUILD_VERSION} \
-    maintainer="abc <a@b.c>" \
-    org.opencontainers.image.title="Barcode Buddy for Grocy" \
-    org.opencontainers.image.description="Barcode system for Grocy" \
-    org.opencontainers.image.vendor="ABC" \
-    org.opencontainers.image.authors="abc <a@b.c>" \
-    org.opencontainers.image.licenses="GPL-3.0" \
-    org.opencontainers.image.url="https://github.com/forceu/barcodebuddy" \
-    org.opencontainers.image.source="https://github.com/forceu/barcodebuddy-docker" \
-    org.opencontainers.image.documentation="https://github.com/forceu/barcodebuddy/blob/master/README.md" \
-    org.opencontainers.image.created=${BUILD_DATE} \
-    org.opencontainers.image.revision=${BUILD_REF} \
-    org.opencontainers.image.version=${BUILD_VERSION}
+    io.hass.version=${BUILD_VERSION} 
+
