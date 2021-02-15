@@ -1,83 +1,15 @@
-# BarcodeBuddy on Docker
+# BarcodeBuddy Homeassistant Docker Image
 
-BarcodeBuddy- now containerized! This is the docker repo of [BarcodeBuddy](https://github.com/Forceu/barcodebuddy).
+BarcodeBuddy- now containerized! This is the docker repo optimized for Home Assistant of [BarcodeBuddy](https://github.com/Forceu/barcodebuddy).
 
 [![Documentation Status](https://readthedocs.org/projects/barcodebuddy-documentation/badge/?version=latest)](https://barcodebuddy-documentation.readthedocs.io/en/latest/?badge=latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/f0rc3/barcodebuddy-docker.svg)](https://hub.docker.com/r/f0rc3/barcodebuddy-docker/)
 
-### Install Docker
+### Install Home Assistant
 
-Follow [these instructions](https://docs.docker.com/engine/installation/) to get Docker running on your server.
-
-### Available on Docker Hub (prebuilt) or built from source
-
-### To pull the latest images to your machine:
-
-```
-docker pull f0rc3/barcodebuddy-docker:latest
-docker run -d -v bbconfig:/config -p 80:80 -p 443:443 f0rc3/barcodebuddy-docker:latest
-```
-
-## Documentation
-
-Please have a look at the [documentation](https://barcodebuddy-documentation.readthedocs.io/en/latest/), for more information on how to install and use the docker image.
-
-#### Architectures
-
-The architectures supported by this image are:
-
-| Architecture | Tag |
-| :----: | --- |
-| amd64 | latest |
-| arm64 | arm64v8-latest |
-| armhf | arm32v7-latest |
-| x86 | i386-latest |
-
-#### Developer image
-
-If you would like to use the unstable channel, which includes all commits and might be more up to date than the release, use the following command:
-
-```
-docker pull f0rc3/barcodebuddy-docker:latest-dev
-```
-
-
-
-The architectures supported by this image are:
-
-| Architecture | Tag |
-| :----: | --- |
-| amd64 | latest-dev |
-| arm64 | arm64v8-latest-dev |
-| armhf | arm32v7-latest-dev |
-| x86 | i386-latest-dev |
-
-### To build from scratch
-
-#### Latest release
-```
-docker build --no-cache --pull -t forceu/barcodebuddy-docker .
-```
-#### Latest commit (unstable)
-```
-docker build --no-cache --pull -t forceu/barcodebuddy-docker-dev -f Dockerfile.dev .
-```
-
-## Additional Information
-
-### Websockets
-
-In the current version, the websockets are only used for internal communication. Everything will work out of the box.
-
-### Exposed Ports
-
- - 80:    HTTP
- - 443:   HTTPS
-
-### Misc
-
-The docker images build are based on [Alpine](https://hub.docker.com/_/alpine/), with an extremely low footprint (about 70MB in total).
-
+![](images/add-repo-url.png?raw=true)
+1. Click context menu in addon section
+2. Add custom repo url and point to this repo https://github.com/Forceu/barcodebuddy-homeassistant
 
 ## Contributors
 <a href="https://github.com/forceu/barcodebuddy-docker/graphs/contributors">
