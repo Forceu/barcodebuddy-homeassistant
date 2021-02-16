@@ -1,0 +1,9 @@
+{
+  "squash": false,
+  "build_from": {
+    "aarch64": "f0rc3/barcodebuddy-docker:latest",
+    "amd64": "f0rc3/barcodebuddy-docker:latest",
+    "armv7": "f0rc3/barcodebuddy-docker:latest"
+  },
+  "args": {}
+}
