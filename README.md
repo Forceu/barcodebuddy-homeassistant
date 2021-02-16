@@ -12,8 +12,8 @@ BarcodeBuddy- now containerized! This is the docker repo optimized for Home Assi
 2. Add custom repo url and point to this repo https://github.com/Forceu/barcodebuddy-homeassistant
 
 ## Contributors
-<a href="https://github.com/forceu/barcodebuddy-docker/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=forceu/barcodebuddy-docker" />
+<a href="https://github.com/forceu/barcodebuddy-homeassistant/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=forceu/barcodebuddy-homeassistant" />
 </a>
 
 ## License
