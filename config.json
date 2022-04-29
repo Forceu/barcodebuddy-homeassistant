@@ -5,16 +5,17 @@
   "description": "Barcode system for Grocy",
   "url": "https://github.com/Forceu/barcodebuddy",
   "webui": "http://[HOST]:[PORT:80]",
+  "ingress": true,
   "panel_icon": "mdi:barcode-scan",
   "startup": "system",
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "map": ["config:rw","ssl"],
   "ports": {
-    "80/tcp": 8621
+    "80/tcp": null
   },
   "ports_description": {
-    "80/tcp": "Web interface"
+    "80/tcp": "Web interface (Not required for Ingress)"
   },
   "options": {
     "require_api_key": false,
