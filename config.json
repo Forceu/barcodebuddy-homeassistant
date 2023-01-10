@@ -10,6 +10,9 @@
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "map": ["config:rw","ssl"],
+  "devices": [ "/dev/input/by-id/usb-0581_011c-event-kbd" ],
+  "environment": {
+    "ATTACH_BARCODESCANNER": "true"
   "ports": {
     "80/tcp": 8621
   },
