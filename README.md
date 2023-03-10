@@ -11,6 +11,9 @@ BarcodeBuddy- now containerized! This is the docker repo optimized for Home Assi
 1. Click context menu in addon section
 2. Add custom repo url and point to this repo https://github.com/Forceu/barcodebuddy-homeassistant
 
+#### Note
+Currently using the Barcode Buddy Docker image for aarch64/arm64 1.8.1.3 as 1.8.1.5 would not start on Home Assistant (https://github.com/Forceu/barcodebuddy-docker/issues/26)
+
 ## Contributors
 <a href="https://github.com/forceu/barcodebuddy-homeassistant/graphs/contributors">
   <img src="https://contributors-img.web.app/image?repo=forceu/barcodebuddy-homeassistant" />
