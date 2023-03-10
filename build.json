@@ -1,8 +1,7 @@
 {
   "squash": false,
   "build_from": {
-    "arm64": "f0rc3/barcodebuddy-docker:arm64v8-latest",
-    "aarch64": "f0rc3/barcodebuddy-docker:arm64v8-latest",
+    "aarch64": "f0rc3/barcodebuddy-docker:arm64v8-v1.8.1.3",
     "amd64": "f0rc3/barcodebuddy-docker:latest",
     "armv7": "f0rc3/barcodebuddy-docker:arm32v7-latest",
     "i386": "f0rc3/barcodebuddy-docker:i386-latest"
