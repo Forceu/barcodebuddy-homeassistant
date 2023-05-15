@@ -7,6 +7,8 @@ ARG BUILD_DATE
 ARG BUILD_REF
 ARG BUILD_VERSION
 
+ENV BBUDDY_DISABLE_AUTHENTICATION true
+
 # Labels
 LABEL \
     io.hass.name="Barcode Buddy for Grocy" \
