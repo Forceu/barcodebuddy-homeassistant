@@ -7,8 +7,6 @@ ARG BUILD_DATE
 ARG BUILD_REF
 ARG BUILD_VERSION
 
-ENV BBUDDY_DISABLE_AUTHENTICATION true
-
 # Labels
 LABEL \
     io.hass.name="Barcode Buddy for Grocy" \
@@ -16,4 +14,7 @@ LABEL \
     io.hass.arch="${BUILD_ARCH}" \
     io.hass.type="addon" \
     io.hass.version=${BUILD_VERSION} 
+    
+COPY data/run.sh /
 
+CMD [ "/run.sh" ]
