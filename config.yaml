@@ -13,6 +13,7 @@ arch:
   - amd64
   - armv7
 boot: auto
+init: false
 map:
   - config:rw
   - ssl
