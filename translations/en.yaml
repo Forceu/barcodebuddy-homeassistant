@@ -1,0 +1,6 @@
+---
+configuration:
+  disable_auth:
+    name: Disable Authentication
+    description: >-
+      Disable Authentication
