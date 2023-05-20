@@ -1,5 +1,4 @@
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM f0rc3/barcodebuddy:latest
 
 # Build arguments
 ARG BUILD_ARCH
